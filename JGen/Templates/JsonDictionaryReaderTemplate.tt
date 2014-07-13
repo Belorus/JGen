@@ -3,55 +3,43 @@
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
-using System.Collections.Generic;
 using System.IO;
+using System.Collections.Generic;
 
 namespace JGen.Readers
 {
 	public static class <#=ReaderName#>
 	{
-		public static <#=Type#> Read(TextReader _textReader)
+		public static Dictionary<<#=KeyType#>, <#=ValType#>> Read(TextReader _textReader)
 		{
-			int c = _textReader.Peek();
-			if (c < 0 || c != '[')
-				throw new JsonException("Incomplete JSON input");
-
-			_textReader.Read();
-			<# if (IsArray) { #>
-var list = new List<<#=ItemType#>>();
-			<# } else { #>
-var list = new <#=Type#>();
-			<# } #>
 			SkipSpaces(_textReader);
-			if (_textReader.Peek() == ']')
+			_textReader.Read();
+			var obj = new Dictionary<<#=KeyType#>, <#=ValType#>>();
+			SkipSpaces(_textReader);
+			if (_textReader.Peek() == '}')
 			{
 				_textReader.Read();
-				<# if (IsArray) { #>
-return list.ToArray();
-				<# } else { #>
-return list;
-			<# } #>
-}
-			
+				return obj;
+			}
 			while (true)
 			{
-				list.Add(<#=ItemTypeReaderName#>.Read(_textReader));
 				SkipSpaces(_textReader);
-				c = _textReader.Peek();
-				if (c != ',')
-					break;
+				<#=KeyType#> name = <#=KeyReaderName#>.Read(_textReader);
+				SkipSpaces(_textReader);
+				//Expect (':');
 				_textReader.Read();
-				SkipSpaces(_textReader);
-			}
-			if (_textReader.Read() != ']')
-				throw new JsonException("JSON array must end with ']'");
 
-				<# if (IsArray) { #>
-return list.ToArray();
-				<# } else { #>
-return list;
-			<# } #>
-}
+				SkipSpaces(_textReader);
+				obj[name] = <#=ValueReaderName#>.Read(_textReader);
+				SkipSpaces(_textReader);
+				int c = _textReader.Read();
+				if (c == ',')
+					continue;
+				if (c == '}')
+					break;
+			}
+			return obj;
+		}
 
 		private static void SkipSpaces(TextReader _textReader)
 		{
@@ -70,9 +58,5 @@ return list;
 				}
 			}
 		}
-
-
-
-
 	}
 }

@@ -18,129 +18,86 @@ namespace JGen.Templates
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "C:\Users\GrigoryP\Documents\Visual Studio 2012\Projects\JGen\JGen\Templates\JsonArrayReaderTemplate.tt"
+    #line 1 "C:\Users\GrigoryP\Documents\Visual Studio 2012\Projects\JGen\JGen\Templates\JsonDictionaryReaderTemplate.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "11.0.0.0")]
-    public partial class JsonArrayReaderTemplate : JsonArrayReaderTemplateBase
+    public partial class JsonDictionaryReaderTemplate : JsonDictionaryReaderTemplateBase
     {
         /// <summary>
         /// Create the template output
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write("using System.Collections.Generic;\r\nusing System.IO;\r\n\r\nnamespace JGen.Readers\r\n{\r" +
+            this.Write("using System.IO;\r\nusing System.Collections.Generic;\r\n\r\nnamespace JGen.Readers\r\n{\r" +
                     "\n\tpublic static class ");
             
-            #line 11 "C:\Users\GrigoryP\Documents\Visual Studio 2012\Projects\JGen\JGen\Templates\JsonArrayReaderTemplate.tt"
+            #line 11 "C:\Users\GrigoryP\Documents\Visual Studio 2012\Projects\JGen\JGen\Templates\JsonDictionaryReaderTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ReaderName));
             
             #line default
             #line hidden
-            this.Write("\r\n\t{\r\n\t\tpublic static ");
+            this.Write("\r\n\t{\r\n\t\tpublic static Dictionary<");
             
-            #line 13 "C:\Users\GrigoryP\Documents\Visual Studio 2012\Projects\JGen\JGen\Templates\JsonArrayReaderTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Type));
-            
-            #line default
-            #line hidden
-            this.Write(" Read(TextReader _textReader)\r\n\t\t{\r\n\t\t\tint c = _textReader.Peek();\r\n\t\t\tif (c < 0 " +
-                    "|| c != \'[\')\r\n\t\t\t\tthrow new JsonException(\"Incomplete JSON input\");\r\n\r\n\t\t\t_textR" +
-                    "eader.Read();\r\n\t\t\t");
-            
-            #line 20 "C:\Users\GrigoryP\Documents\Visual Studio 2012\Projects\JGen\JGen\Templates\JsonArrayReaderTemplate.tt"
- if (IsArray) { 
+            #line 13 "C:\Users\GrigoryP\Documents\Visual Studio 2012\Projects\JGen\JGen\Templates\JsonDictionaryReaderTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(KeyType));
             
             #line default
             #line hidden
-            this.Write("var list = new List<");
+            this.Write(", ");
             
-            #line 21 "C:\Users\GrigoryP\Documents\Visual Studio 2012\Projects\JGen\JGen\Templates\JsonArrayReaderTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(ItemType));
-            
-            #line default
-            #line hidden
-            this.Write(">();\r\n\t\t\t");
-            
-            #line 22 "C:\Users\GrigoryP\Documents\Visual Studio 2012\Projects\JGen\JGen\Templates\JsonArrayReaderTemplate.tt"
- } else { 
+            #line 13 "C:\Users\GrigoryP\Documents\Visual Studio 2012\Projects\JGen\JGen\Templates\JsonDictionaryReaderTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(ValType));
             
             #line default
             #line hidden
-            this.Write("var list = new ");
+            this.Write("> Read(TextReader _textReader)\r\n\t\t{\r\n\t\t\tSkipSpaces(_textReader);\r\n\t\t\t_textReader." +
+                    "Read();\r\n\t\t\tvar obj = new Dictionary<");
             
-            #line 23 "C:\Users\GrigoryP\Documents\Visual Studio 2012\Projects\JGen\JGen\Templates\JsonArrayReaderTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Type));
-            
-            #line default
-            #line hidden
-            this.Write("();\r\n\t\t\t");
-            
-            #line 24 "C:\Users\GrigoryP\Documents\Visual Studio 2012\Projects\JGen\JGen\Templates\JsonArrayReaderTemplate.tt"
- } 
+            #line 17 "C:\Users\GrigoryP\Documents\Visual Studio 2012\Projects\JGen\JGen\Templates\JsonDictionaryReaderTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(KeyType));
             
             #line default
             #line hidden
-            this.Write("\t\t\tSkipSpaces(_textReader);\r\n\t\t\tif (_textReader.Peek() == \']\')\r\n\t\t\t{\r\n\t\t\t\t_textRe" +
-                    "ader.Read();\r\n\t\t\t\t");
+            this.Write(", ");
             
-            #line 29 "C:\Users\GrigoryP\Documents\Visual Studio 2012\Projects\JGen\JGen\Templates\JsonArrayReaderTemplate.tt"
- if (IsArray) { 
-            
-            #line default
-            #line hidden
-            this.Write("return list.ToArray();\r\n\t\t\t\t");
-            
-            #line 31 "C:\Users\GrigoryP\Documents\Visual Studio 2012\Projects\JGen\JGen\Templates\JsonArrayReaderTemplate.tt"
- } else { 
+            #line 17 "C:\Users\GrigoryP\Documents\Visual Studio 2012\Projects\JGen\JGen\Templates\JsonDictionaryReaderTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(ValType));
             
             #line default
             #line hidden
-            this.Write("return list;\r\n\t\t\t");
+            this.Write(">();\r\n\t\t\tSkipSpaces(_textReader);\r\n\t\t\tif (_textReader.Peek() == \'}\')\r\n\t\t\t{\r\n\t\t\t\t_" +
+                    "textReader.Read();\r\n\t\t\t\treturn obj;\r\n\t\t\t}\r\n\t\t\twhile (true)\r\n\t\t\t{\r\n\t\t\t\tSkipSpaces" +
+                    "(_textReader);\r\n\t\t\t\t");
             
-            #line 33 "C:\Users\GrigoryP\Documents\Visual Studio 2012\Projects\JGen\JGen\Templates\JsonArrayReaderTemplate.tt"
- } 
-            
-            #line default
-            #line hidden
-            this.Write("}\r\n\t\t\t\r\n\t\t\twhile (true)\r\n\t\t\t{\r\n\t\t\t\tlist.Add(");
-            
-            #line 38 "C:\Users\GrigoryP\Documents\Visual Studio 2012\Projects\JGen\JGen\Templates\JsonArrayReaderTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(ItemTypeReaderName));
+            #line 27 "C:\Users\GrigoryP\Documents\Visual Studio 2012\Projects\JGen\JGen\Templates\JsonDictionaryReaderTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(KeyType));
             
             #line default
             #line hidden
-            this.Write(@".Read(_textReader));
+            this.Write(" name = ");
+            
+            #line 27 "C:\Users\GrigoryP\Documents\Visual Studio 2012\Projects\JGen\JGen\Templates\JsonDictionaryReaderTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(KeyReaderName));
+            
+            #line default
+            #line hidden
+            this.Write(".Read(_textReader);\r\n\t\t\t\tSkipSpaces(_textReader);\r\n\t\t\t\t//Expect (\':\');\r\n\t\t\t\t_text" +
+                    "Reader.Read();\r\n\r\n\t\t\t\tSkipSpaces(_textReader);\r\n\t\t\t\tobj[name] = ");
+            
+            #line 33 "C:\Users\GrigoryP\Documents\Visual Studio 2012\Projects\JGen\JGen\Templates\JsonDictionaryReaderTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(ValueReaderName));
+            
+            #line default
+            #line hidden
+            this.Write(@".Read(_textReader);
 				SkipSpaces(_textReader);
-				c = _textReader.Peek();
-				if (c != ',')
+				int c = _textReader.Read();
+				if (c == ',')
+					continue;
+				if (c == '}')
 					break;
-				_textReader.Read();
-				SkipSpaces(_textReader);
 			}
-			if (_textReader.Read() != ']')
-				throw new JsonException(""JSON array must end with ']'"");
-
-				");
-            
-            #line 49 "C:\Users\GrigoryP\Documents\Visual Studio 2012\Projects\JGen\JGen\Templates\JsonArrayReaderTemplate.tt"
- if (IsArray) { 
-            
-            #line default
-            #line hidden
-            this.Write("return list.ToArray();\r\n\t\t\t\t");
-            
-            #line 51 "C:\Users\GrigoryP\Documents\Visual Studio 2012\Projects\JGen\JGen\Templates\JsonArrayReaderTemplate.tt"
- } else { 
-            
-            #line default
-            #line hidden
-            this.Write("return list;\r\n\t\t\t");
-            
-            #line 53 "C:\Users\GrigoryP\Documents\Visual Studio 2012\Projects\JGen\JGen\Templates\JsonArrayReaderTemplate.tt"
- } 
-            
-            #line default
-            #line hidden
-            this.Write(@"}
+			return obj;
+		}
 
 		private static void SkipSpaces(TextReader _textReader)
 		{
@@ -159,10 +116,6 @@ namespace JGen.Templates
 				}
 			}
 		}
-
-
-
-
 	}
 }");
             return this.GenerationEnvironment.ToString();
@@ -176,7 +129,7 @@ namespace JGen.Templates
     /// Base class for this transformation
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "11.0.0.0")]
-    public class JsonArrayReaderTemplateBase
+    public class JsonDictionaryReaderTemplateBase
     {
         #region Fields
         private global::System.Text.StringBuilder generationEnvironmentField;

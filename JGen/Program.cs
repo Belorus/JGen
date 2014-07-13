@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -32,14 +33,24 @@ namespace JGen
 
 		private static Generator CreateGeneratorForType(Type type)
 		{
+			Console.WriteLine("Processing type: "+type.FullName);
+
+			if (type == typeof (object))
+			{
+				throw new ArgumentException("Object field type is prohibited");
+			}
+
 			if (type == typeof (string))
 				return new StringReaderGenerator();
-			if (type == typeof (int))
+			if (type == typeof (int) || type == typeof(long))
 				return new NumberReaderGenerator(type);
-			if (type == typeof(double) || type == typeof(float))
+			if (type == typeof(double) || type == typeof(float) || type == typeof(Decimal))
 				return new FloatReaderGenerator(type);
 			if (type == typeof (bool))
 				return new BoolReaderGenerator();
+			if (typeof(IDictionary).IsAssignableFrom(type))
+				return new DictionaryReaderGenerator(type, CreateGeneratorForType(type.GetGenericArguments()[0]), CreateGeneratorForType(type.GetGenericArguments()[1]));
+
 			if (ReflectionUtils.IsCollection(type))
 			{
 				Type itemType = ReflectionUtils.GetCollectionType(type);
@@ -54,8 +65,8 @@ namespace JGen
 		}
 	}
 
-	internal class TestType
+	public class TestType
 	{
-		public List<List<int>> data;
+		public Dictionary<string, Dictionary<int, List<int>>> data;
 	}
 }

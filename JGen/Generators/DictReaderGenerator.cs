@@ -5,27 +5,32 @@ using JGen.Templates;
 
 namespace JGen.Generators
 {
-	internal class CollectionReaderGenerator : Generator
+	internal class DictionaryReaderGenerator : Generator
 	{
 		private readonly Type _type;
-		public Generator ItemGenerator { get; private set; }
+		
+		public Generator KeyGenerator { get; private set; }
+		public Generator ValueGenerator { get; private set; }
 
-		public CollectionReaderGenerator(Type type, Generator itemGenerator)
+		public DictionaryReaderGenerator(Type type, Generator keyGenerator, Generator valGenerator)
 		{
 			_type = type;
-			ItemGenerator = itemGenerator;
+
+			KeyGenerator = keyGenerator;
+			ValueGenerator = valGenerator;
 		}
 
 		public override ReaderCode GenerateReader()
 		{
-			var childReader = ItemGenerator.GenerateReader();
+			var keyReader = KeyGenerator.GenerateReader();
+			var valReader = ValueGenerator.GenerateReader();
 
 			var name = string.Format("Json{0}Reader", GetHumanName(_type));
 			return new ReaderCode
 			{
 				ReaderName = name,
-				Content = new JsonArrayReaderTemplate(GetCodeName(_type), childReader.ReaderName, name, GetCodeName(ReflectionUtils.GetCollectionType(_type)), _type.IsArray).TransformText(),
-				Dependend = new []{ childReader}
+				Content = new JsonDictionaryReaderTemplate(name, keyReader.ReaderName, valReader.ReaderName, GetCodeName(_type.GetGenericArguments()[0]), GetCodeName(_type.GetGenericArguments()[1])).TransformText(),
+				Dependend = new[] { keyReader, valReader }
 			};
 		}
 
@@ -48,10 +53,6 @@ namespace JGen.Generators
 				       string.Join("And", t.GetGenericArguments().Select(GetHumanName));
 
 				return result;
-			}
-			else if (t.IsArray)
-			{
-				return "ArrayOf" + GetHumanName(t.GetElementType());
 			}
 
 			return t.Name;
