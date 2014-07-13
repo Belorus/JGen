@@ -100,21 +100,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>JsonStringReaderTemplate.tt</DependentUpon>
     </Compile>
-    <Compile Include="Test\JsonArrayOfArrayOfInt32Reader.cs" />
-    <Compile Include="Test\JsonArrayOfInt32Reader.cs" />
-    <Compile Include="Test\JsonArrayOfNreWinLineReader.cs" />
-    <Compile Include="Test\JsonArrayOfObjectReader.cs" />
-    <Compile Include="Test\JsonBoolReader.cs" />
-    <Compile Include="Test\JsonDoubleReader.cs" />
-    <Compile Include="Test\JsonInt32Reader.cs" />
-    <Compile Include="Test\JsonNreBetReader.cs" />
-    <Compile Include="Test\JsonNreSpinResponseReader.cs" />
-    <Compile Include="Test\JsonNreSpinResultReader.cs" />
-    <Compile Include="Test\JsonNreUserLevelReader.cs" />
-    <Compile Include="Test\JsonNreUserStatusReader.cs" />
-    <Compile Include="Test\JsonNreWinLineReader.cs" />
-    <Compile Include="Test\JsonObjectReader.cs" />
-    <Compile Include="Test\JsonStringReader.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
