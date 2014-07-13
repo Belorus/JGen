@@ -1,0 +1,70 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+using System.IO;
+
+namespace JGen.Readers
+{
+	public static class <#=ReaderName#>
+	{
+		public static <#=Type#> Read(TextReader _textReader)
+		{
+			SkipSpaces(_textReader);
+			_textReader.Read();
+			var obj = new <#=Type#>();
+			SkipSpaces(_textReader);
+			if (_textReader.Peek() == '}')
+			{
+				_textReader.Read();
+				return obj;
+			}
+			while (true)
+			{
+				SkipSpaces(_textReader);
+				string name = JsonStringReader.Read(_textReader);
+				SkipSpaces(_textReader);
+				//Expect (':');
+				_textReader.Read();
+
+				SkipSpaces(_textReader);
+				switch (name)
+				{
+					<# foreach(var prop in PropertyReaders){ #>
+case "<#=prop.PropertyName#>":
+						obj.<#=prop.PropertyName#> = <#=prop.ReaderName#>.Read(_textReader);
+						break;
+					<# } #>
+default:
+						throw new JsonException("Not supported node: " + name);
+				}
+				SkipSpaces(_textReader);
+				int c = _textReader.Read();
+				if (c == ',')
+					continue;
+				if (c == '}')
+					break;
+			}
+			return obj;
+		}
+
+		private static void SkipSpaces(TextReader _textReader)
+		{
+			while (true)
+			{
+				switch (_textReader.Peek())
+				{
+					case ' ':
+					case '\t':
+					case '\r':
+					case '\n':
+						_textReader.Read();
+						continue;
+					default:
+						return;
+				}
+			}
+		}
+	}
+}

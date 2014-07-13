@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F18045D1-A33F-4A1B-BBDA-BBDAE72F1562}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>JGen</RootNamespace>
+    <AssemblyName>JGen</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\portable-net40+sl4+wp7+win8\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="SF.Common">
+      <HintPath>E:\Projects\slotomania.ng\Src\SF\SF.Common\bin\Debug\SF.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Generators\BoolReaderGenerator.cs" />
+    <Compile Include="Generators\CollectionReaderGenerator.cs" />
+    <Compile Include="Generators\FloatReaderGenerator.cs" />
+    <Compile Include="Generators\Generator.cs" />
+    <Compile Include="Generators\NumberReaderGenerator.cs" />
+    <Compile Include="MS\JSONAttributes.cs" />
+    <Compile Include="MS\JSONReader.cs" />
+    <Compile Include="MS\JsonSer.cs" />
+    <Compile Include="ObjectPropertyInfo.cs" />
+    <Compile Include="Generators\ObjectReaderGenerator.cs" />
+    <Compile Include="Perf.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Readers\JsonException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ReflectionUtils.cs" />
+    <Compile Include="Generators\StringReaderGenerator.cs" />
+    <Compile Include="Templates\JsonObjectReaderTemplate.configurator.cs" />
+    <Compile Include="Templates\JsonObjectReaderTemplate.cs">
+      <DependentUpon>JsonObjectReaderTemplate.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Templates\JsonBoolReaderTemplate.cs">
+      <DependentUpon>JsonBoolReaderTemplate.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Templates\JsonFloatReaderTemplate.configurator.cs" />
+    <Compile Include="Templates\JsonFloatReaderTemplate.cs">
+      <DependentUpon>JsonFloatReaderTemplate.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Templates\JsonArrayReaderTemplate.configurator.cs" />
+    <Compile Include="Templates\JsonArrayReaderTemplate.cs">
+      <DependentUpon>JsonArrayReaderTemplate.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Templates\JsonNumberReaderTemplate.configurator.cs" />
+    <Compile Include="Templates\JsonNumberReaderTemplate.cs">
+      <DependentUpon>JsonNumberReaderTemplate.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Templates\JsonStringReaderTemplate.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>JsonStringReaderTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Test\JsonArrayOfArrayOfInt32Reader.cs" />
+    <Compile Include="Test\JsonArrayOfInt32Reader.cs" />
+    <Compile Include="Test\JsonArrayOfNreWinLineReader.cs" />
+    <Compile Include="Test\JsonArrayOfObjectReader.cs" />
+    <Compile Include="Test\JsonBoolReader.cs" />
+    <Compile Include="Test\JsonDoubleReader.cs" />
+    <Compile Include="Test\JsonInt32Reader.cs" />
+    <Compile Include="Test\JsonNreBetReader.cs" />
+    <Compile Include="Test\JsonNreSpinResponseReader.cs" />
+    <Compile Include="Test\JsonNreSpinResultReader.cs" />
+    <Compile Include="Test\JsonNreUserLevelReader.cs" />
+    <Compile Include="Test\JsonNreUserStatusReader.cs" />
+    <Compile Include="Test\JsonNreWinLineReader.cs" />
+    <Compile Include="Test\JsonObjectReader.cs" />
+    <Compile Include="Test\JsonStringReader.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="Templates\JsonObjectReaderTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>JsonObjectReaderTemplate.cs</LastGenOutput>
+    </None>
+    <None Include="Templates\JsonBoolReaderTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>JsonBoolReaderTemplate.cs</LastGenOutput>
+    </None>
+    <None Include="Templates\JsonFloatReaderTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>JsonFloatReaderTemplate.cs</LastGenOutput>
+    </None>
+    <None Include="Templates\JsonArrayReaderTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>JsonArrayReaderTemplate.cs</LastGenOutput>
+    </None>
+    <None Include="Templates\JsonNumberReaderTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>JsonNumberReaderTemplate.cs</LastGenOutput>
+    </None>
+    <None Include="Templates\JsonStringReaderTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>JsonStringReaderTemplate.cs</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
