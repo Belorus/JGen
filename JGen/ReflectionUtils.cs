@@ -38,7 +38,7 @@ namespace JGen
 		{
 			if (t.IsGenericType)
 			{
-				return Regex.Replace(t.Name, @"`\d+", string.Empty) + "<" +
+				return Regex.Replace(t.Namespace +"."+ t.Name, @"`\d+", string.Empty) + "<" +
 					   string.Join(",", t.GetGenericArguments().Select(GetCodeName)) + ">";
 			}
 
