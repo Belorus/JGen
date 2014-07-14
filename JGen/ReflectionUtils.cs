@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 
 namespace JGen
 {
@@ -31,6 +32,34 @@ namespace JGen
 					.Union(type.GetTypeInfo().GetRuntimeProperties()
 					.Select(m => new ObjectPropertyInfo(m.PropertyType, m.Name)))
 					.ToArray();
+		}
+
+		public static string GetCodeName(Type t)
+		{
+			if (t.IsGenericType)
+			{
+				return Regex.Replace(t.Name, @"`\d+", string.Empty) + "<" +
+					   string.Join(",", t.GetGenericArguments().Select(GetCodeName)) + ">";
+			}
+
+			return t.FullName;
+		}
+
+		public static string GetHumanName(Type t)
+		{
+			if (t.IsGenericType)
+			{
+				string result = Regex.Replace(t.Name, @"`\d+", string.Empty) + "Of" +
+					   string.Join("And", t.GetGenericArguments().Select(GetHumanName));
+
+				return result;
+			}
+			else if (t.IsArray)
+			{
+				return "ArrayOf" + GetHumanName(t.GetElementType());
+			}
+
+			return t.Name;
 		}
 	}
 }

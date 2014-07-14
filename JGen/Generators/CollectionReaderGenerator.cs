@@ -20,41 +20,15 @@ namespace JGen.Generators
 		{
 			var childReader = ItemGenerator.GenerateReader();
 
-			var name = string.Format("Json{0}Reader", GetHumanName(_type));
+			var name = string.Format("Json{0}Reader", ReflectionUtils.GetHumanName(_type));
 			return new ReaderCode
 			{
 				ReaderName = name,
-				Content = new JsonArrayReaderTemplate(GetCodeName(_type), childReader.ReaderName, name, GetCodeName(ReflectionUtils.GetCollectionType(_type)), _type.IsArray).TransformText(),
+				Content = new JsonArrayReaderTemplate(ReflectionUtils.GetCodeName(_type), childReader.ReaderName, name, ReflectionUtils.GetCodeName(ReflectionUtils.GetCollectionType(_type)), _type.IsArray).TransformText(),
 				Dependend = new []{ childReader}
 			};
 		}
 
-		private static string GetCodeName(Type t)
-		{
-			if (t.IsGenericType)
-			{
-				return Regex.Replace(t.Name, @"`\d+", string.Empty) + "<" +
-				       string.Join(",", t.GetGenericArguments().Select(GetCodeName)) + ">";
-			}
-
-			return t.FullName;
-		}
-
-		private string GetHumanName(Type t)
-		{
-			if (t.IsGenericType)
-			{
-				string result = Regex.Replace(t.Name, @"`\d+", string.Empty) + "Of" +
-				       string.Join("And", t.GetGenericArguments().Select(GetHumanName));
-
-				return result;
-			}
-			else if (t.IsArray)
-			{
-				return "ArrayOf" + GetHumanName(t.GetElementType());
-			}
-
-			return t.Name;
-		}
+		
 	}
 }

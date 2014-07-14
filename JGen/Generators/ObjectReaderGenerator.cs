@@ -20,12 +20,12 @@ namespace JGen.Generators
 		{			
 			Dictionary<string, ReaderCode> inner = _innerGenerators.ToDictionary(kv => kv.Key, kv => kv.Value.GenerateReader());
 
-			var name = string.Format("Json{0}Reader", _type.Name);
+			var name = string.Format("Json{0}Reader", ReflectionUtils.GetHumanName(_type));
 			return
 				new ReaderCode()
 				{
 					ReaderName = name,
-					Content = new JsonObjectReaderTemplate(_type, inner.Select(kv => new PropertyReaderReference()
+					Content = new JsonObjectReaderTemplate(ReflectionUtils.GetCodeName(_type), inner.Select(kv => new PropertyReaderReference()
 					{
 						ReaderName = kv.Value.ReaderName,
 						PropertyName = kv.Key

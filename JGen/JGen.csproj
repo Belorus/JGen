@@ -107,6 +107,22 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>JsonStringReaderTemplate.tt</DependentUpon>
     </Compile>
+    <Compile Include="Test\JsonArrayOfArrayOfInt32Reader.cs" />
+    <Compile Include="Test\JsonArrayOfInt32Reader.cs" />
+    <Compile Include="Test\JsonArrayOfNreWinLineReader.cs" />
+    <Compile Include="Test\JsonBoolReader.cs" />
+    <Compile Include="Test\JsonDoubleReader.cs" />
+    <Compile Include="Test\JsonInt32Reader.cs" />
+    <Compile Include="Test\JsonInt64Reader.cs" />
+    <Compile Include="Test\JsonNreBetReader.cs" />
+    <Compile Include="Test\JsonNreSpinResponseReader.cs" />
+    <Compile Include="Test\JsonNreSpinResultReader.cs" />
+    <Compile Include="Test\JsonNreUserLevelReader.cs" />
+    <Compile Include="Test\JsonNreUserStatusReader.cs" />
+    <Compile Include="Test\JsonNreWinLineReader.cs" />
+    <Compile Include="Test\JsonServiceMessageReader.cs" />
+    <Compile Include="Test\JsonSlotsServerResponseDtoOfNreSpinResponseReader.cs" />
+    <Compile Include="Test\JsonStringReader.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -143,9 +159,7 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Test\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

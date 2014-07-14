@@ -1,4 +1,6 @@
 ﻿
+using System;
+
 namespace JGen.Templates
 {
 	public partial class JsonObjectReaderTemplate
@@ -8,10 +10,10 @@ namespace JGen.Templates
 
 		public PropertyReaderReference[] PropertyReaders { get; private set; }
 		
-		public JsonObjectReaderTemplate(System.Type type, PropertyReaderReference[] propertyReaders, string readerName)
+		public JsonObjectReaderTemplate(String type, PropertyReaderReference[] propertyReaders, string readerName)
 		{
 			PropertyReaders = propertyReaders;
-			Type = type.FullName;
+			Type = type;
 			ReaderName = readerName;
 		}
 	}

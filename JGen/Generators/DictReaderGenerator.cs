@@ -25,37 +25,13 @@ namespace JGen.Generators
 			var keyReader = KeyGenerator.GenerateReader();
 			var valReader = ValueGenerator.GenerateReader();
 
-			var name = string.Format("Json{0}Reader", GetHumanName(_type));
+			var name = string.Format("Json{0}Reader", ReflectionUtils.GetHumanName(_type));
 			return new ReaderCode
 			{
 				ReaderName = name,
-				Content = new JsonDictionaryReaderTemplate(name, keyReader.ReaderName, valReader.ReaderName, GetCodeName(_type.GetGenericArguments()[0]), GetCodeName(_type.GetGenericArguments()[1])).TransformText(),
+				Content = new JsonDictionaryReaderTemplate(name, keyReader.ReaderName, valReader.ReaderName, ReflectionUtils.GetCodeName(_type.GetGenericArguments()[0]), ReflectionUtils.GetCodeName(_type.GetGenericArguments()[1])).TransformText(),
 				Dependend = new[] { keyReader, valReader }
 			};
-		}
-
-		private static string GetCodeName(Type t)
-		{
-			if (t.IsGenericType)
-			{
-				return Regex.Replace(t.Name, @"`\d+", string.Empty) + "<" +
-				       string.Join(",", t.GetGenericArguments().Select(GetCodeName)) + ">";
-			}
-
-			return t.FullName;
-		}
-
-		private string GetHumanName(Type t)
-		{
-			if (t.IsGenericType)
-			{
-				string result = Regex.Replace(t.Name, @"`\d+", string.Empty) + "Of" +
-				       string.Join("And", t.GetGenericArguments().Select(GetHumanName));
-
-				return result;
-			}
-
-			return t.Name;
 		}
 	}
 }
